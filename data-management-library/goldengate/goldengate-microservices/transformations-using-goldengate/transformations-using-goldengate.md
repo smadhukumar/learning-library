@@ -53,7 +53,7 @@ Open a terminal session
 UPDATE Data: 
 
 ```
-<copy>sqlplus ggate/ggate@oggoow19</copy>
+<copy>sqlplus ggate/ggate@oggoow191</copy>
 ```
 1.	Alter Customer Table: 
 
@@ -117,7 +117,7 @@ commit;</copy>
 ```
 **1 row copied**
 
-1. After the insert transaction on the source table, query target **CUSTOMER** 
+5. After the insert transaction on the source table, query target **CUSTOMER** 
 
 ```
 <copy>sqlplus ggate/ggate@oggoow191</copy>
@@ -139,27 +139,24 @@ exit
 
 **Replicat Definition**
 
-1. edit the REPLICAT **IREP** and add the following lines
+2. edit the REPLICAT **IREP** and add the following lines
 
 ```
-<copy>MAP OGGOOW19.SOE.CUSTOMERS, TARGET OGGOOW191.SOE.CUSTOMERS, keycols(customer_id),
-SQLEXEC (SPNAME P_MAIL, PARAMS (code_param = CUST_EMAIL)),
-COLMAP (USEDEFAULTS, CUST_EMAIL=P_MAIL.desc_param,CUSTOMER_NAME=@STRCAT(CUST_FIRST_NAME,CUST_LAST_NAME));</copy>
+<copy>MAP OGGOOW19.SOE.CUSTOMERS, TARGET OGGOOW191.SOE.CUSTOMERS, keycols(customer_id),&
+SQLEXEC (SPNAME P_MAIL, PARAMS (code_param = CUST_EMAIL)),&
+COLMAP (USEDEFAULTS, CUST_EMAIL=P_MAIL.desc_param,CUSTOMER_NAME=@STRCAT(CUST_FIRST_NAME,&CUST_LAST_NAME));</copy>
 ```
 ![](./images/c7.png " ")
 
 
-2. Open Terminal and SQLPLUS into Target Database (OGGOOW191).Create a required stored procedure under GGATE users. This will be used in the SQLEXEC call in the mapping statement
+3. Open Terminal and SQLPLUS into Target Database (OGGOOW191).Create a required stored procedure under GGATE users. This will be used in the SQLEXEC call in the mapping statement
 
 ```
 <copy>sqlplus ggate/ggate@oggoow191</copy>
 ```
 
 ```
-<copy>CREATE OR REPLACE FUNCTION F_MAIL(CODE_PARAM IN VARCHAR2) RETURN VARCHAR2 IS DESC_PARAM VARCHAR2(100); BEGIN RETURN 'XXXXXXXXX@dummy.com';</copy>
-```
-```
-<copy> END; / </copy>
+<copy>CREATE OR REPLACE FUNCTION F_MAIL(CODE_PARAM IN VARCHAR2) RETURN VARCHAR2 IS DESC_PARAM VARCHAR2(100); BEGIN RETURN 'XXXXXXXXX@dummy.com'; END; /;</copy>
 ```
 
 **Press Enter**
@@ -168,7 +165,7 @@ COLMAP (USEDEFAULTS, CUST_EMAIL=P_MAIL.desc_param,CUSTOMER_NAME=@STRCAT(CUST_FIR
 
 ![](./images/c8.png " ")
 
-1. Select F_MAIL and verify results
+4. Select F_MAIL and verify results
 
 ![](./images/c9.png " ")
 
@@ -186,7 +183,7 @@ COLMAP (USEDEFAULTS, CUST_EMAIL=P_MAIL.desc_param,CUSTOMER_NAME=@STRCAT(CUST_FIR
 <copy>exit</copy>
 ```
 
-4. Open the Administration Server of the Target deployment i.e. Boston at http://<your ip address>:17001. When the page is completely open, you should be at a page where you can see Replicat 6. • Open Terminal and SQLPLUS into Source Database (OGGOOW19) and do the transcation on the table CUSTOMER by executing following
+5. Open the Administration Server of the Target deployment i.e. Boston at http://<your ip address>:17001. When the page is completely open, you should be at a page where you can see Replicat 6. • Open Terminal and SQLPLUS into Source Database (OGGOOW19) and do the transcation on the table CUSTOMER by executing following
    
    ![](./images/c11.png " ")
 
@@ -194,19 +191,16 @@ COLMAP (USEDEFAULTS, CUST_EMAIL=P_MAIL.desc_param,CUSTOMER_NAME=@STRCAT(CUST_FIR
 <copy>sqlplus ggate/ggate@oggoow19</copy>
 ```
 
-5. Open the Terminal and SQLPLUS into Source Database (OGGOOW19) and do the transcation on the table CUSTOMER by executing update_email below
+6. Open the Terminal and SQLPLUS into Source Database (OGGOOW19) and do the transcation on the table CUSTOMER by executing update_email below
+
+
+7.	Run the following Query for update
 
 ```
 <copy>update soe.customers  set CUST_EMAIL='madhu.kumar.s@yahoo.com' where CUSTOMER_ID=12345678;
 commit;</copy>
 ```
-6.	Run the following Query for update
-
-```
-<copy>update soe.customers  set CUST_EMAIL='madhu.kumar.s@yahoo.com' where CUSTOMER_ID=12345678;
-commit;</copy>
-```
-7.	Check the Target tables is stored procedure was executed for static masking of the emails. Open Terminal and SQLPLUS into Target Database (OGGOOW191). Excute “select CUST_EMAIL from soe.customers where customer_ID between 562 and 570;” in SQLPLUS
+8.	Check the Target tables is stored procedure was executed for static masking of the emails. Open Terminal and SQLPLUS into Target Database (OGGOOW191). Excute “select CUST_EMAIL from soe.customers where customer_ID between 562 and 570;” in SQLPLUS
 
 ```
 <copy>sqlplus ggate/ggate@oggoow191</copy>
@@ -230,7 +224,7 @@ commit;</copy>
 <copy>MAP OGGOOW19.SOE.LOGON, TARGET OGGOOW191.SOE.LOGON_AUDIT, KEYCOLS(LOGON_ID), &
  COLMAP (USEDEFAULTS,&
  host=@GETENV('GGENVIRONMENT','HOSTNAME'),&
- gg_group=@GETENV ('GGENVIRONMENT','GROUPNAME'),&
+ gg_group=@GETENV ('GGENVIRONMENT','GROUPNAME')&
  osuser=@GETENV ('GGENVIRONMENT','OSUSERNAME'),&
  domain=@GETENV ('GGENVIRONMENT','DOMAINNAME'),&
  ba_ind=@GETENV ('GGHEADER','BEFOREAFTERINDICATOR'),&
@@ -260,13 +254,6 @@ commit;</copy>
 ```
 
 
-7. Open the terminal and log into SQLPLUS to do look at the transactions replicated on target DB (OGGOOW191) in table *LOGON_AUDIT
-
-
-```
-<copy>sqlplus ggate/ggate@oggoow191</copy>
-```
-
 ```
 <copy>insert into soe.customers values('12345678','Larry','Ellison','NY','New York','5000','LARYY@ORACLE.COM','365','15-Oct-11','Business','Music','4-Jan-61','Y','N','2767122','126219999')</copy>
 ```
@@ -276,19 +263,18 @@ commit;</copy>
 
 **1 row copied**
 
-1. After the insert transaction on the source table, query target **CUSTOMER** 
+7. After the insert transaction on the source table, query target **CUSTOMER** 
 
 
 ```
 <copy>select CUST_FIRST_NAME,CUST_LAST_NAME,CUSTOMER_NAME from SOE.CUSTOMERS where customer_id=12345678;</copy>
 ```
+
+8. After the insert transaction on the source table, query target **CUSTOMER** table as below in the terminal.
+
 ```
 <copy>sqlplus ggate/ggate@oggoow191</copy>
 ```
-
-
-After the insert transaction on the source table, query target **CUSTOMER** table as below in the terminal.
-
 ```
 <copy>select CUST_FIRST_NAME,CUST_LAST_NAME,CUSTOMER_NAME from SOE.CUSTOMERS where customer_id=12345678;</copy>
 ```
