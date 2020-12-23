@@ -90,10 +90,7 @@ UPDATE Data:
 ![](./images/c2.png " ")
 
 ```
-<copy>MAP oggoow19.SOE.CUSTOMERS, TARGET oggoow191.SOE.CUSTOMERS, keycols(customer_id), & 
-SQLEXEC (SPNAME P_MAIL, PARAMS (code_param = CUST_EMAIL)), & 
-COLMAP (USEDEFAULTS, CUST_EMAIL = P_MAIL.desc_param,CUSTOMER_NAME 
-=@STRCAT(CUST_FIRST_NAME,CUST_LAST_NAME));</copy>
+<copy>MAP OGGOOW19.SOE.CUSTOMERS, TARGET OGGOOW191.SOE.CUSTOMERS, KEYCOLS(cust_id), COLMAP (USEDEFAULTS,CUSTOMER_NAME =@(STRCAT(CUST_FIRST_NAME,’ ‘ ,CUST_LAST_NAME));</copy>
 ```
 ![](./images/c2.png " ")
 
@@ -112,7 +109,7 @@ COLMAP (USEDEFAULTS, CUST_EMAIL = P_MAIL.desc_param,CUSTOMER_NAME
 4.	Execute for insert 
 
 ```
-<copy>INSERT INTO SOE.CUSTOMERS VALUES(‘12345678’,'LARRY','ELLISON','NY','NEW YORK','5000','LARRY@ORACLE.COM','365','15-OCT- 11','BUSINESS','MUSIC','4-JAN-61','Y','N','2767122','126219999');
+<copy>INSERT INTO soe.customers VALUES('12345678','Larry','Ellison','NY','New York','5000','LARYY@ORACLE.COM','365','15-Oct-11','Business','Music','4-Jan-61','Y','N','2767122','126219999');
 commit;</copy>
 ```
 **1 row copied**
@@ -142,7 +139,7 @@ exit
 2. edit the REPLICAT **IREP** and add the following lines
 
 ```
-<copy>MAP OGGOOW19.SOE.CUSTOMERS, TARGET OGGOOW191.SOE.CUSTOMERS, keycols(customer_id),&
+<copy>MAP OGGOOW19.SOE.CUSTOMERS, TARGET OGGOOW191.SOE.CUSTOMERS,& keycols(customer_id),&
 SQLEXEC (SPNAME P_MAIL, PARAMS (code_param = CUST_EMAIL)),&
 COLMAP (USEDEFAULTS, CUST_EMAIL=P_MAIL.desc_param,CUSTOMER_NAME=@STRCAT(CUST_FIRST_NAME,&CUST_LAST_NAME));</copy>
 ```
@@ -173,17 +170,11 @@ COLMAP (USEDEFAULTS, CUST_EMAIL=P_MAIL.desc_param,CUSTOMER_NAME=@STRCAT(CUST_FIR
 <copy>select F_MAIL('MADHU') from dual;</copy>
 ```
 
-
-```
-<copy>CREATE OR REPLACE FUNCTION F_MAIL(CODE_PARAM IN VARCHAR2) RETURN VARCHAR2 IS DESC_PARAM VARCHAR2(100); BEGIN RETURN 'XXXXXXXXX@dummy.com'; END; / </copy>
-```
-![](./images/c10.png " ")
-
 ```
 <copy>exit</copy>
 ```
 
-5. Open the Administration Server of the Target deployment i.e. Boston at http://<your ip address>:17001. When the page is completely open, you should be at a page where you can see Replicat 6. • Open Terminal and SQLPLUS into Source Database (OGGOOW19) and do the transcation on the table CUSTOMER by executing following
+1. Open the Administration Server of the Target deployment i.e. Boston at http://<your ip address>:17001. When the page is completely open, you should be at a page where you can see Replicat 6. • Open Terminal and SQLPLUS into Source Database (OGGOOW19) and do the transcation on the table CUSTOMER by executing following
    
    ![](./images/c11.png " ")
 

@@ -168,6 +168,10 @@ After the completion of this task, accessing the Oracle GoldenGate Microservices
 ```
 If this is the first time you access this address, you will need to click through some security exceptions page as it is using a self-signed certificate. Once you get to the page, you will see below website. 
 
+![](./images/x.png " ")
+
+**Accept the risk and continue**
+
 ![](./images/g9.png " ")
 
 3.	Upon completion, return to your web browser. You should be able to access the ServiceManager page by only using the URL without a port number.

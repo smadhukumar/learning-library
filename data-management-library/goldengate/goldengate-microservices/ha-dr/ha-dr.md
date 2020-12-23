@@ -112,20 +112,8 @@ cd /home/oracle/Desktop/Scripts/HOL/Lab9/Build</copy>
 
 ![](./images/h13.png " ")
 
-## **STEP 6**: Distribution path from Boston to connect to Atlanta 
 
-```
-<copy>./add_DistroPath2.sh Welcome1 17002 SOE2SOE1 bb 16003 ba</copy>
-```
-
-![](./images/h14.png " ")
-
-```
-<copy>https://<your ip address>/Boston/distsrvr</copy>
-```
-![](./images/h15.png " ")
-
-## **STEP 7**: Alias Creation 
+## **STEP 6**: Alias Creation 
 ```
 <copy>./create_credential_GGAlias.sh Welcome1 16001 ggate@oggoow19 ggate TGGATE1</copy>
 ```
@@ -137,7 +125,7 @@ cd /home/oracle/Desktop/Scripts/HOL/Lab9/Build</copy>
 ![](./images/h17.png " ")
 
 
-## **STEP 8**: Checkpoint Creation 
+## **STEP 7**: Checkpoint Creation 
 
 ```
 <copy>./add_CheckpointTable.sh Welcome1 16001 OracleGoldenGate.TGGATE1</copy>
@@ -149,7 +137,7 @@ cd /home/oracle/Desktop/Scripts/HOL/Lab9/Build</copy>
 ```
 ![](./images/h19.png " ")
 
-## **STEP 9**: Replicat Creation on Atlanta
+## **STEP 8**: Replicat Creation on Atlanta
 
 ```
 <copy>./add_Replicat1.sh Welcome1 16001 IREP1</copy>
@@ -161,7 +149,7 @@ cd /home/oracle/Desktop/Scripts/HOL/Lab9/Build</copy>
 ```
 ![](./images/h21.png " ")
 
-## **STEP 10**: Auto CDR setup 
+## **STEP 9**: Auto CDR setup 
 
 ```
 <copy>cd /home/oracle/Desktop/Scripts/HOL/Lab9</copy>
@@ -172,7 +160,7 @@ cd /home/oracle/Desktop/Scripts/HOL/Lab9/Build</copy>
 ![](./images/h22.png " ")
 
 
-## **STEP 11**: Start GoldenGate Process 
+## **STEP 10**: Start GoldenGate Process 
 
 ```
 <copy>./start_replication.sh Welcome1 17001 EXTSOE1 17002 SOE2SOE1 16001 IREP1</copy>
@@ -183,7 +171,7 @@ cd /home/oracle/Desktop/Scripts/HOL/Lab9/Build</copy>
 ![](./images/h24.png " ")
 
 
-## **STEP 12**: Generate Load through Swingbench 
+## **STEP 11**: Generate Load through Swingbench 
 
 In this step we’ll use a script to invoke Swingbench to apply data to both databases at the same time and then check them using the Performance Metric Service.
 
@@ -194,7 +182,7 @@ cd /home/oracle/Desktop/Scripts/HOL/Lab8</copy>
 ```
 
 ```
-<copy>start_swingbench.sh</copy>
+<copy>sh ./start_swingbench.sh</copy>
 ```
 
 ![](./images/h25.png " ")
