@@ -142,13 +142,15 @@ output:
 5. After the insert transaction on the source table, query target table **CUSTOMER** on PDB OGGOOW191
 
 ```
-<copy>sqlplus ggate/ggate@oggoow191
+<copy>
+sqlplus ggate/ggate@oggoow191
 
 </copy>
 ```
 
 ```
-<copy>select CUST_FIRST_NAME,CUST_LAST_NAME,CUSTOMER_NAME from SOE.CUSTOMERS where customer_id=12345678;
+<copy>
+select CUST_FIRST_NAME,CUST_LAST_NAME,CUSTOMER_NAME from SOE.CUSTOMERS where customer_id=12345678;
 exit;
 
 </copy>
@@ -184,13 +186,15 @@ COLMAP (USEDEFAULTS, CUST_EMAIL = P_MAIL.desc_param,CUSTOMER_NAME =@STRCAT(CUST_
 3. Open Terminal and SQLPLUS into Target Database (OGGOOW191).Create a required stored procedure under GGATE users. This will be used in the SQLEXEC call in the mapping statement
 
 ```
-<copy>sqlplus ggate/ggate@oggoow191
+<copy>
+sqlplus ggate/ggate@oggoow191
 
 </copy>
 ```
 
 ```
-<copy>CREATE  OR REPLACE FUNCTION F_MAIL(CODE_PARAM IN VARCHAR2) 
+<copy>
+  CREATE  OR REPLACE FUNCTION F_MAIL(CODE_PARAM IN VARCHAR2) 
   RETURN VARCHAR2 
   IS DESC_PARAM VARCHAR2(100);
   BEGIN 
@@ -198,7 +202,7 @@ COLMAP (USEDEFAULTS, CUST_EMAIL = P_MAIL.desc_param,CUSTOMER_NAME =@STRCAT(CUST_
   END;
   /
 
-  </copy>
+</copy>
 ```
 
 **Press Enter**
@@ -209,7 +213,8 @@ COLMAP (USEDEFAULTS, CUST_EMAIL = P_MAIL.desc_param,CUSTOMER_NAME =@STRCAT(CUST_
 
 ```
 
-<copy>CREATE OR REPLACE PROCEDURE  P_MAIL (CODE_PARAM IN VARCHAR2,DESC_PARAM  OUT VARCHAR2)
+<copy>
+CREATE OR REPLACE PROCEDURE  P_MAIL (CODE_PARAM IN VARCHAR2,DESC_PARAM  OUT VARCHAR2)
   IS 
   begin
   select F_MAIL('CODE_PARAM')
@@ -218,9 +223,9 @@ COLMAP (USEDEFAULTS, CUST_EMAIL = P_MAIL.desc_param,CUSTOMER_NAME =@STRCAT(CUST_
   end;
   /
   
-  </copy> 
+</copy> 
 
-  ```
+```
 
 **Press Enter**
 
